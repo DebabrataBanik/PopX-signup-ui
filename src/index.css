@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-:root {
-  --font-primary: "Rubik", sans-serif;
+@theme {
+  --font-rubik: "Rubik", sans-serif;
 
   --white: #ffffff;
 
@@ -17,9 +17,77 @@
   --pink-400: #e70b897b;
   --red-500: #dd4a3d;
 
-  --overlay-light: rgba(0, 0, 0, 0.03);
+  --shadow-header: 0px 3px 6px #00000007;
 }
 
-.font-rubik{
-  font-family: var(--font-primary);
+body{
+  font-family: "Rubik", sans-serif;
+}
+
+@layer components{
+  button{
+    width: 335px;
+    height: 46px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  label{
+    color: var(--purple-500);
+    font-size: 13px;
+  }
+
+  input{
+    width: 335px;
+    height: 40px;
+    border-radius: 6px;
+    padding-left: 14px;
+    border: 1px solid var(--gray-300);
+    color: var(--gray-900);
+    font-size: 14px;
+    outline: none;
+
+    &::placeholder{
+      color: var(--gray-500);
+    }
+
+    &:active,&:focus{
+      border-color: var(--gray-900);
+    }
+  }
+
+  input[type='radio']{
+    width: 22px;
+    height: 22px;
+    padding: 0;
+
+    &:checked {
+      outline: 1px solid var(--purple-600);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after{
+        content: '';
+        position: absolute;
+        height: 12px;
+        width: 12px;
+        background-color: var(--purple-500);
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .absolute-img{
+    position: absolute;
+    bottom: 3px;
+    right: -4px;
+    z-index: 10;
+    width: 21px;
+    height: 23px;
+  }
 }
