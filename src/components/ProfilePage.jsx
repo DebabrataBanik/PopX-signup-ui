@@ -10,7 +10,7 @@ function ProfilePage() {
           <div className='flex gap-5'>
             <div className='w-[76px] h-[76px] relative'>
               <img src='/Ellipse 114.png' alt='Headshot of Mary Doe' />
-              <img className='absolute-img' src='/Group 1585.png' />
+              <img className='absolute-img cursor-pointer' src='/Group 1585.png' />
             </div>
             <div>
               <h3 className='text-[#1D2226] font-medium text-[15px]'>Mary Doe</h3>
