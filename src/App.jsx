@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
 
 import LandingPage from './components/LandingPage'
@@ -23,7 +23,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <div className='bg-gray-700'>  
+    <div className='bg-gray-400'>  
       <main className='max-w-[375px] min-h-[812px] bg-[#F7F8F9] mx-auto flex flex-col'>
 
           <AnimatePresence mode='wait'>

@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
-@theme {
-  --font-rubik: "Rubik", sans-serif;
-
+:root{
   --white: #ffffff;
 
   --gray-100: #f7f8f9;
@@ -16,6 +14,10 @@
 
   --pink-400: #e70b897b;
   --red-500: #dd4a3d;
+}
+
+@theme {
+  --font-rubik: "Rubik", sans-serif;
 
   --shadow-header: 0px 3px 6px #00000007;
 }
