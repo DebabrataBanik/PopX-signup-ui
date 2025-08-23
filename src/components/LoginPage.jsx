@@ -1,4 +1,4 @@
-
+import { Link } from "react-router"
 
 function LoginPage() {
   return (
@@ -18,7 +18,9 @@ function LoginPage() {
             <input type='password' id='password' name='password' placeholder='Enter password' />
           </label>
         </form>
-        <button className='mt-3.5 bg-[#CBCBCB] font-medium text-white'>Login</button>        
+        <Link to='/profile'>
+          <button className='mt-3.5 bg-[#CBCBCB] font-medium text-white'>Login</button>        
+        </Link>
       </div>
     </div>
   )

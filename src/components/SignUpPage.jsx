@@ -1,3 +1,4 @@
+import { Link } from "react-router"
 
 function SignUpPage() {
   return (
@@ -43,7 +44,9 @@ function SignUpPage() {
         </form>
       </div>
       
-      <button className='bg-[#6C25FF] text-white font-medium mt-auto'>Create Account</button>
+      <Link to='/profile'>
+        <button className='bg-[#6C25FF] text-white font-medium mt-auto'>Create Account</button>
+      </Link>
 
     </div>
   )
