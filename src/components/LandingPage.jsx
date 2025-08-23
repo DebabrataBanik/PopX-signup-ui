@@ -3,8 +3,7 @@ import { Link } from "react-router"
 function LandingPage() {
   return (
 
-    <div className='flex flex-col grow px-5 py-10'>
-      <div className='mt-auto'>
+      <div className='mt-auto px-5 py-10'>
         <div className='mb-[29px] flex flex-col gap-2.5'>
           <h1 className='font-rubik font-medium text-[#1D2226] text-[28px]'>Welcome to PopX</h1>
           <p className='font-rubik text-[#1D2226]/60 font-normal text-[18px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
@@ -18,7 +17,6 @@ function LandingPage() {
           </Link>
         </div>
       </div>
-    </div>  
       
   )
 }
