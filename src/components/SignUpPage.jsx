@@ -28,7 +28,8 @@ function SignUpPage() {
     }))
   }
 
-  function handleSubmit(){
+  function handleSubmit(e){
+    e.preventDefault();
     if(isValid) navigate('/profile');
   }
 
@@ -39,24 +40,24 @@ function SignUpPage() {
         <form onSubmit={handleSubmit} className='flex flex-col justify-between grow'>
 
           <div className="flex flex-col gap-[29px] mt-[31px]">
-            <label htmlFor='fullname'>
-              <span>Full Name<span className='text-[#DD4A3D]'>*</span></span>
+            <label className="relative" htmlFor='fullname'>
+              <span className="absolute-label">Full Name<span className='text-[#DD4A3D]'>*</span></span>
               <input onChange={handleChange} type='text' name='fullname' id='fullname' placeholder='Enter full name' />
             </label>       
-            <label htmlFor='phone'>
-              <span>Phone Number<span className='text-[#DD4A3D]'>*</span></span>
+            <label className="relative" htmlFor='phone'>
+              <span className="absolute-label">Phone Number<span className='text-[#DD4A3D]'>*</span></span>
               <input onChange={handleChange} type='text' name='phone' id='phone' placeholder='Enter phone number' />
             </label>  
-            <label htmlFor='email'>
-              <span>Email Address<span className='text-[#DD4A3D]'>*</span></span>
+            <label className="relative" htmlFor='email'>
+              <span className="absolute-label">Email Address<span className='text-[#DD4A3D]'>*</span></span>
               <input onChange={handleChange} type='text' name='email' id='email' placeholder='Enter email address' />
             </label>  
-            <label htmlFor='password'>
-              <span>Password<span className='text-[#DD4A3D]'>*</span></span>
+            <label className="relative" htmlFor='password'>
+              <span className="absolute-label">Password<span className='text-[#DD4A3D]'>*</span></span>
               <input onChange={handleChange} type='password' name='password' id='password' placeholder='Enter password' />
             </label>  
-            <label htmlFor='company'>
-              <span>Company name</span>
+            <label className="relative" htmlFor='company'>
+              <span className="absolute-label">Company name</span>
               <input onChange={handleChange} type='text' name='company' id='company' placeholder='Enter company name' />
             </label>   
 
@@ -75,7 +76,7 @@ function SignUpPage() {
               </div>
             </div>
           </div> 
-          <button className={`bg-[#6C25FF] ${!isValid ? 'cursor-not-allowed' : ''} text-white font-medium mt-auto`}>Create Account</button>
+          <button disabled={!isValid} aria-disabled={!isValid} className={`bg-[#6C25FF] ${!isValid ? 'cursor-not-allowed' : ''} text-white font-medium mt-auto`}>Create Account</button>
         </form>
       </div>
       

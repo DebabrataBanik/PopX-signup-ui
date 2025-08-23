@@ -81,7 +81,10 @@ body{
       }
     }
   }
+  
+}
 
+@layer utilities{
   .absolute-img{
     position: absolute;
     bottom: 3px;
@@ -89,5 +92,22 @@ body{
     z-index: 10;
     width: 21px;
     height: 23px;
+  }
+  
+  .absolute-label{
+    position: absolute;
+    left: 14px;
+    padding-inline: 5px;
+    top: -10px;
+    background-color: var(--gray-100);
+  }
+  
+  .custom-dash{
+    border-bottom: 1px dashed transparent;
+    border-image: repeating-linear-gradient(
+      to right,
+      #CBCBCB 0 4px,
+      transparent 4px 8px
+    ) 1;
   }
 }

@@ -29,16 +29,15 @@ function LoginPage() {
           <p className='font-rubik text-[#1D2226]/60 font-normal text-[18px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
         </div>
         <form className='flex flex-col gap-[23px]' onSubmit={handleSubmit}>
-          <label htmlFor='email'>
-            <span>Email Address</span>
+          <label htmlFor='email' className="relative">
+            <span className="absolute-label">Email Address</span>
             <input type='text' id='email' name='email' placeholder='Enter email address' onChange={handleChange} />
           </label>
-          <label htmlFor='password'>
-            <span>Password</span>
+          <label htmlFor='password' className="relative">
+            <span className="absolute-label">Password</span>
             <input type='password' id='password' name='password' placeholder='Enter password' onChange={handleChange} />
           </label>
           <button 
-            type='submit' 
             disabled={!isValid} 
             className={`-mt-[9px] font-medium ${isValid ? "bg-[#6C25FF]" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}
           >
