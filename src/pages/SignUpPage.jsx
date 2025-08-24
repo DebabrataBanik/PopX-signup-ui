@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { inputData } from "../util/InputData";
 import InputField from "../components/InputField";
+import useAuthStore from "../store/authStore";
 
 function SignUpPage() {
 
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullname: '',
     phone: '',
@@ -15,6 +15,9 @@ function SignUpPage() {
     company: '',
     agency: ''
   })
+  
+  const signup = useAuthStore(state => state.signup)
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Create Account";
@@ -39,7 +42,11 @@ function SignUpPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (isValid) navigate('/profile');
+
+    if (isValid) {
+      signup(formData)
+      navigate('/profile');
+    }
   }
 
   return (

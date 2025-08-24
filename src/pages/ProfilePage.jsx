@@ -3,8 +3,11 @@ import { useEffect } from "react";
 import React from "react";
 import ProfileImage from '../assets/images/Ellipse 114.png';
 import InsertImageIcon from '../assets/icons/Group 1585.png';
+import useAuthStore from "../store/authStore";
 
 function ProfilePage() {
+
+  const currentUser = useAuthStore(state => state.currentUser)
 
   useEffect(() => {
     document.title = "Your Profile";
@@ -27,8 +30,12 @@ function ProfilePage() {
                 <img className='absolute-img cursor-pointer' src={InsertImageIcon} alt="Change profile picture" />
               </div>
               <div>
-                <h3 className='text-[#1D2226] font-medium text-[15px]'>Mary Doe</h3>
-                <p className='text-[#1D2226] text-sm'>Marry@Gmail.Com</p>
+                {/* <h3 className='text-[#1D2226] font-medium text-[15px]'>Mary Doe</h3> */}
+                <h3 className='text-[#1D2226] font-medium text-[15px]'>{currentUser.fullname}</h3>
+
+                {/* <p className='text-[#1D2226] text-sm'>Marry@Gmail.Com</p> */}
+                <p className='text-[#1D2226] text-sm'>{currentUser.email}</p>
+
               </div>
             </div>
             <div>
