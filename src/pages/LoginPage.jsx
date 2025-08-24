@@ -1,6 +1,8 @@
-import { useState , useEffect } from "react"
+import { useState , useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet-async";
+import InputField from "../components/InputField";
+import { inputData } from "../util/InputData";
 
 function LoginPage() {
 
@@ -11,14 +13,17 @@ function LoginPage() {
     document.title = "Login Page";
   }, []);
 
-  const isValid = formData.email.trim() && formData.password.trim();
+  const isValid = Boolean(
+    /\S+@\S+\.\S+/.test(formData.email) &&
+    formData.password.trim()
+  );
  
-  function handleChange(e){
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev, [name]: value
     }))
-  }
+  }, [])
 
   function handleSubmit(e){
     e.preventDefault();
@@ -39,14 +44,17 @@ function LoginPage() {
             <p className='font-rubik text-[#1D2226]/60 font-normal text-[18px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
           </div>
           <form className='flex flex-col gap-[23px]' onSubmit={handleSubmit}>
-            <label htmlFor='email' className="relative">
-              <span className="absolute-label">Email Address</span>
-              <input type='text' id='email' name='email' placeholder='Enter email address' onChange={handleChange} />
-            </label>
-            <label htmlFor='password' className="relative">
-              <span className="absolute-label">Password</span>
-              <input type='password' id='password' name='password' placeholder='Enter password' onChange={handleChange} />
-            </label>
+
+            {
+              inputData.map(data => {
+                if(data.name == 'email' || data.name == 'password'){
+                  return (
+                    <InputField key={data.name} {...data} handleChange={handleChange} value={formData[data.name]} />
+                  )
+                }
+                return null;
+              })
+            }
             <button 
               disabled={!isValid} 
               className={`-mt-[9px] font-medium ${isValid ? "bg-[#6C25FF]" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}

@@ -1,5 +1,8 @@
 import { Helmet } from "react-helmet-async"
 import { useEffect } from "react";
+import React from "react";
+import ProfileImage from '../assets/images/Ellipse 114.png';
+import InsertImageIcon from '../assets/icons/Group 1585.png';
 
 function ProfilePage() {
 
@@ -20,8 +23,8 @@ function ProfilePage() {
           <section className='pl-5 pr-[18px] flex flex-col gap-[30px] pb-5 border-0 border-b custom-dash'>
             <div className='flex gap-5'>
               <div className='w-[76px] h-[76px] relative'>
-                <img src='/Ellipse 114.png' alt='Headshot of Mary Doe' />
-                <img className='absolute-img cursor-pointer' src='/Group 1585.png' />
+                <img src={ProfileImage} alt='Headshot of Mary Doe' />
+                <img className='absolute-img cursor-pointer' src={InsertImageIcon} alt="Change profile picture" />
               </div>
               <div>
                 <h3 className='text-[#1D2226] font-medium text-[15px]'>Mary Doe</h3>
@@ -39,4 +42,4 @@ function ProfilePage() {
   )
 }
 
-export default ProfilePage
+export default React.memo(ProfilePage)

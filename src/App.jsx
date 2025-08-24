@@ -1,10 +1,10 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
 
-import LandingPage from './components/LandingPage'
-import LoginPage from './components/LoginPage'
-import SignUpPage from './components/SignUpPage'
-import ProfilePage from './components/ProfilePage'
+import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/LoginPage'
+import SignUpPage from './pages/SignUpPage'
+import ProfilePage from './pages/ProfilePage'
 
 const PageWrapper = ({ children }) => (
   <motion.div

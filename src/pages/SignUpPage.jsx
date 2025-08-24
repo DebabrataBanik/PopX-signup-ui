@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { inputData } from "../util/InputData";
+import InputField from "../components/InputField";
 
 function SignUpPage() {
 
@@ -18,24 +20,26 @@ function SignUpPage() {
     document.title = "Create Account";
   }, []);
 
-  const isValid =
+  const isValid = Boolean(
     formData.fullname.trim() &&
     formData.phone.trim() &&
-    formData.email.trim() &&
+    /\S+@\S+\.\S+/.test(formData.email) &&
     formData.password.trim() &&
-    formData.agency;
+    formData.agency
+  );
+  
 
 
-  function handleChange(e){
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev, [name]: value
     }))
-  }
+  }, [])
 
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault();
-    if(isValid) navigate('/profile');
+    if (isValid) navigate('/profile');
   }
 
   return (
@@ -50,26 +54,12 @@ function SignUpPage() {
           <form onSubmit={handleSubmit} className='flex flex-col justify-between grow'>
 
             <div className="flex flex-col gap-[29px] mt-[31px]">
-              <label className="relative" htmlFor='fullname'>
-                <span className="absolute-label">Full Name<span className='text-[#DD4A3D]'>*</span></span>
-                <input onChange={handleChange} type='text' name='fullname' id='fullname' placeholder='Enter full name' />
-              </label>       
-              <label className="relative" htmlFor='phone'>
-                <span className="absolute-label">Phone Number<span className='text-[#DD4A3D]'>*</span></span>
-                <input onChange={handleChange} type='text' name='phone' id='phone' placeholder='Enter phone number' />
-              </label>  
-              <label className="relative" htmlFor='email'>
-                <span className="absolute-label">Email Address<span className='text-[#DD4A3D]'>*</span></span>
-                <input onChange={handleChange} type='text' name='email' id='email' placeholder='Enter email address' />
-              </label>  
-              <label className="relative" htmlFor='password'>
-                <span className="absolute-label">Password<span className='text-[#DD4A3D]'>*</span></span>
-                <input onChange={handleChange} type='password' name='password' id='password' placeholder='Enter password' />
-              </label>  
-              <label className="relative" htmlFor='company'>
-                <span className="absolute-label">Company name</span>
-                <input onChange={handleChange} type='text' name='company' id='company' placeholder='Enter company name' />
-              </label>   
+
+              {
+                inputData.map((data) => (
+                  <InputField key={data.name} {...data} handleChange={handleChange} value={formData[data.name]} />
+                ))
+              }
 
               <div>
                 <p className='text-[13px] text-[#1D2226] mb-2.5'>Are you an Agency?</p>
@@ -85,15 +75,15 @@ function SignUpPage() {
                   </div>
                 </div>
               </div>
-            </div> 
-            <button disabled={!isValid} aria-disabled={!isValid} className={`bg-[#6C25FF] ${!isValid ? 'cursor-not-allowed' : ''} text-white font-medium mt-auto`}>Create Account</button>
+            </div>
+            <button disabled={!isValid} className={`bg-[#6C25FF] ${!isValid ? 'cursor-not-allowed' : ''} text-white font-medium mt-auto`}>Create Account</button>
           </form>
         </div>
-        
 
-      </div>  
+
+      </div>
     </>
-    
+
   )
 }
 
