@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async"
 import { useEffect } from "react";
 import React from "react";
+import { useNavigate } from 'react-router-dom'
 import ProfileImage from '../assets/images/Ellipse 114.png';
 import InsertImageIcon from '../assets/icons/Group 1585.png';
 import useAuthStore from "../store/authStore";
@@ -8,6 +9,14 @@ import useAuthStore from "../store/authStore";
 function ProfilePage() {
 
   const currentUser = useAuthStore(state => state.currentUser)
+  const logout = useAuthStore(state => state.logout)
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout()
+    navigate('/', { replace: true })
+  }
 
   useEffect(() => {
     document.title = "Your Profile";
@@ -20,8 +29,9 @@ function ProfilePage() {
         <meta name="description" content="Profile Settings" />
       </Helmet>
       <div className="relative">
-          <header className='w-full h-[68px] pl-[19px] pt-[27px] pb-[19px] bg-white shadow-header mb-[30px]'>
+          <header className='w-full h-[68px] flex items-center justify-between px-[19px] pt-[27px] pb-[19px] bg-white shadow-header mb-[30px]'>
             <h2 className='text-[18px] leading-[21px] text-[#1D2226]'>Account Settings</h2>
+            <button onClick={handleLogout} className="text-sm text-[#6C25FF] hover:bg-[#6C25FF] hover:text-white p-1.5 px-2 transition-all duration-300 rounded-md cursor-pointer">Logout</button>
           </header>
           <section className='pl-5 pr-[18px] flex flex-col gap-[30px] pb-5 border-0 border-b custom-dash'>
             <div className='flex gap-5'>
@@ -31,10 +41,10 @@ function ProfilePage() {
               </div>
               <div>
                 {/* <h3 className='text-[#1D2226] font-medium text-[15px]'>Mary Doe</h3> */}
-                <h3 className='text-[#1D2226] font-medium text-[15px]'>{currentUser.fullname}</h3>
+                <h3 className='text-[#1D2226] font-medium text-[15px]'>{currentUser?.fullname}</h3>
 
                 {/* <p className='text-[#1D2226] text-sm'>Marry@Gmail.Com</p> */}
-                <p className='text-[#1D2226] text-sm'>{currentUser.email}</p>
+                <p className='text-[#1D2226] text-sm'>{currentUser?.email}</p>
 
               </div>
             </div>

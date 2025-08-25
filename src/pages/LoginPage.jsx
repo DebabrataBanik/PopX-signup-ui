@@ -35,8 +35,7 @@ function LoginPage() {
     if(isValid) {
       const success = login(formData.email, formData.password);
       if(success){
-        console.log(currentUser)
-        navigate('/profile');
+        navigate('/profile', { replace: true });
       } else{
         alert('Enter valid details.')
       }
@@ -69,7 +68,7 @@ function LoginPage() {
             }
             <button 
               disabled={!isValid} 
-              className={`-mt-[9px] font-medium ${isValid ? "bg-[#6C25FF]" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}
+              className={`btn -mt-[9px] font-medium ${isValid ? "bg-[#6C25FF]" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}
             >
               Login
             </button>        

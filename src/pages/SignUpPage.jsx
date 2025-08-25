@@ -83,7 +83,7 @@ function SignUpPage() {
                 </div>
               </div>
             </div>
-            <button disabled={!isValid} className={`bg-[#6C25FF] ${!isValid ? 'cursor-not-allowed' : ''} text-white font-medium mt-auto`}>Create Account</button>
+            <button disabled={!isValid} className={`bg-[#6C25FF] btn ${!isValid ? 'cursor-not-allowed' : ''} text-white font-medium mt-auto`}>Create Account</button>
           </form>
         </div>
 
