@@ -3,11 +3,15 @@ import { useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet-async";
 import InputField from "../components/InputField";
 import { inputData } from "../util/InputData";
+import useAuthStore from "../store/authStore";
 
 function LoginPage() {
 
   const navigate = useNavigate();
   const [ formData, setFormData ] = useState({ email: '', password: ''})
+
+  const login = useAuthStore(state => state.login)
+  const currentUser = useAuthStore(state => state.currentUser)
 
   useEffect(() => {
     document.title = "Login Page";
@@ -28,7 +32,14 @@ function LoginPage() {
   function handleSubmit(e){
     e.preventDefault();
 
-    if(isValid) navigate('/profile');
+    if(isValid) {
+      const success = login(formData.email, formData.password);
+      if(success){
+        navigate('/profile', { replace: true });
+      } else{
+        alert('Enter valid details.')
+      }
+    }
   }
 
   return (
@@ -57,7 +68,7 @@ function LoginPage() {
             }
             <button 
               disabled={!isValid} 
-              className={`-mt-[9px] font-medium ${isValid ? "bg-[#6C25FF]" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}
+              className={`btn -mt-[9px] font-medium ${isValid ? "bg-[#6C25FF]" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}
             >
               Login
             </button>        

@@ -27,15 +27,7 @@ body{
 }
 
 @layer components{
-  button{
-    width: 335px;
-    height: 46px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
+  
 
   label{
     color: var(--purple-500);
@@ -87,6 +79,17 @@ body{
 }
 
 @layer utilities{
+
+  .btn{
+    width: 335px;
+    height: 46px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
   .absolute-img{
     position: absolute;
     bottom: 3px;
