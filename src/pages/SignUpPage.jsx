@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { inputData } from "../util/InputData";
 import InputField from "../components/InputField";
 import useAuthStore from "../store/authStore";
+import { toast, ToastContainer } from "react-toastify";
 
 function SignUpPage() {
 
@@ -31,8 +32,6 @@ function SignUpPage() {
     formData.agency
   );
   
-
-
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -44,8 +43,14 @@ function SignUpPage() {
     e.preventDefault();
 
     if (isValid) {
-      signup(formData)
-      navigate('/profile');
+      const res = signup(formData);
+      if(!res.success){
+        toast.error(res.message)
+      } else {
+        navigate('/profile', { replace: true });
+      }
+    } else {
+      toast.warn('Please fill in all required fields.')
     }
   }
 
@@ -83,12 +88,24 @@ function SignUpPage() {
                 </div>
               </div>
             </div>
-            <button disabled={!isValid} className={`bg-[#6C25FF] btn ${!isValid ? 'cursor-not-allowed' : ''} text-white font-medium mt-auto`}>Create Account</button>
+            <button className={`bg-[#6C25FF] btn cursor-pointer text-white font-medium mt-auto`}>Create Account</button>
           </form>
         </div>
 
-
       </div>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
 
   )

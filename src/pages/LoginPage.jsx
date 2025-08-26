@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import InputField from "../components/InputField";
 import { inputData } from "../util/InputData";
 import useAuthStore from "../store/authStore";
+import { ToastContainer, toast } from "react-toastify";
 
 function LoginPage() {
 
@@ -11,7 +12,6 @@ function LoginPage() {
   const [ formData, setFormData ] = useState({ email: '', password: ''})
 
   const login = useAuthStore(state => state.login)
-  const currentUser = useAuthStore(state => state.currentUser)
 
   useEffect(() => {
     document.title = "Login Page";
@@ -33,11 +33,13 @@ function LoginPage() {
     e.preventDefault();
 
     if(isValid) {
-      const success = login(formData.email, formData.password);
-      if(success){
+
+      const res = login(formData.email, formData.password);
+      if(res.success){
         navigate('/profile', { replace: true });
+
       } else{
-        alert('Enter valid details.')
+        toast.error('Invalid credentials.')
       }
     }
   }
@@ -68,7 +70,7 @@ function LoginPage() {
             }
             <button 
               disabled={!isValid} 
-              className={`btn -mt-[9px] font-medium ${isValid ? "bg-[#6C25FF]" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}
+              className={`btn -mt-[9px] font-medium ${isValid ? "bg-[#6C25FF] cursor-pointer" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}
             >
               Login
             </button>        
@@ -76,6 +78,19 @@ function LoginPage() {
 
         </div>
       </div>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
     
   )

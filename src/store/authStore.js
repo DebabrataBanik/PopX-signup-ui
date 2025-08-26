@@ -3,25 +3,46 @@ import { persist } from "zustand/middleware";
 
 const useAuthStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
     users: [],
     currentUser: null,
+    isLoading: false,
 
-    signup: (userData) => 
+    signup: (userData) => {
+      const state = get();
+
+      const existingUser = state.users.find(user => user.email === userData.email);
+      if(existingUser){
+        return { success: false, message: "User already exists with this email" }
+      }
+
+      const newUser = {
+        ...userData,
+        id: Date.now().toString(),
+        createdAt: new Date().toISOString()
+      }
+
       set(state => ({
-        users: [...state.users, userData],
-        currentUser: userData
-    })),
+        users: [...state.users, newUser],
+        currentUser: newUser
+      }))
+
+      return { success: true, message: "Account created successfully!"};
+    },
 
     login: (email, password) => {
-      const state = useAuthStore.getState();
+      set({ isLoading: true })
+
+      const state = get();
       const user = state.users.find(user => user.email === email && user.password === password);
+
       if(user){
-        set({ currentUser: user });
-        return true; 
+        set({ currentUser: user, isLoading: false })
+      } else {
+        set({ currentUser: null, isLoading: false })
       }
-      set({ currentUser: null });
-      return false;
+    
+      return user ? { success: true, message: "Login successfull!"} : { success: false , message: 'Invalid credentials.'}
     },
 
     logout: () => set({ currentUser: null })
@@ -29,6 +50,10 @@ const useAuthStore = create(
   }),
   {
     name: 'auth-storage',
+    partialize: (state) => ({ 
+        users: state.users, 
+        currentUser: state.currentUser 
+    }),
   }
 ))
 

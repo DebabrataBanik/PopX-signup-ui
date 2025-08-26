@@ -21,10 +21,10 @@ function LandingPage() {
           </div>
           <div className='flex flex-col gap-2.5 items-center'>
             <Link to='/signup'>
-              <button className='btn text-white bg-[#6C25FF] font-medium'>Create Account</button>
+              <button className='btn cursor-pointer text-white bg-[#6C25FF] font-medium'>Create Account</button>
             </Link>
             <Link to='/login'>
-              <button className='btn text-[#1D2226] bg-[#6C25FF4B] font-medium'>Already Registered? Login</button>
+              <button className='btn cursor-pointer text-[#1D2226] bg-[#6C25FF4B] font-medium'>Already Registered? Login</button>
             </Link>
           </div>
         </div>
