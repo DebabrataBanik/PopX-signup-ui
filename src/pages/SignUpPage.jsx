@@ -48,7 +48,10 @@ function SignUpPage() {
     setFormData(prev => ({
       ...prev, [name]: value
     }))
+  }, [])
 
+  const handleBlur = useCallback(e => {
+    const { name, value } = e.target;
     setErrors(prev => ({
       ...prev,
       [name]: validateField(name, value)
@@ -92,7 +95,7 @@ function SignUpPage() {
 
               {
                 inputData.map((data) => (
-                  <InputField key={data.name} {...data} handleChange={handleChange} value={formData[data.name]} error={errors[data.name]} />
+                  <InputField key={data.name} {...data} handleChange={handleChange} handleBlur={handleBlur} value={formData[data.name]} error={errors[data.name]} />
                 ))
               }
 

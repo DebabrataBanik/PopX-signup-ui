@@ -3,6 +3,7 @@ import React from "react"
 function InputField({
   label,
   handleChange,
+  handleBlur,
   type,
   name,
   required = true,
@@ -20,7 +21,7 @@ function InputField({
       </span>
       <input
         className={`${error ? 'border-[#e70b897b]' : ''}`} 
-        onChange={handleChange} value={value} type={type} name={name} id={name} placeholder={placeholder} />
+        onChange={handleChange} onBlur={handleBlur} value={value} type={type} name={name} id={name} placeholder={placeholder} />
         {error && <p className="text-[#dd4a3d] text-xs mt-1">{error}</p>}
     </label>
   )

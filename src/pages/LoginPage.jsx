@@ -38,7 +38,10 @@ function LoginPage() {
     setFormData(prev => ({
       ...prev, [name]: value
     }))
+  }, [])
 
+  const handleBlur = useCallback((e) => {
+    const { name, value } = e.target;
     setErrors(prev => ({
       ...prev, 
       [name]: validateField(name, value)
@@ -85,7 +88,7 @@ function LoginPage() {
               inputData.map(data => {
                 if(data.name == 'email' || data.name == 'password'){
                   return (
-                    <InputField key={data.name} {...data} handleChange={handleChange} value={formData[data.name]} error={errors[data.name]}/>
+                    <InputField key={data.name} {...data} handleChange={handleChange} handleBlur={handleBlur} value={formData[data.name]} error={errors[data.name]}/>
                   )
                 }
                 return null;
