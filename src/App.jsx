@@ -26,7 +26,7 @@ function App() {
   const currentUser = useAuthStore(state => state.currentUser)
 
   return (
-    <div className='bg-gray-400'>  
+    <div>  
       <main className='max-w-[375px] min-h-[812px] bg-[#F7F8F9] mx-auto flex flex-col'>
 
           <AnimatePresence mode='wait'>

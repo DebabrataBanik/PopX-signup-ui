@@ -17,40 +17,63 @@ function SignUpPage() {
     agency: ''
   })
   
+  const [ errors, setErrors ] = useState({})
+
   const signup = useAuthStore(state => state.signup)
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Create Account";
   }, []);
-
-  const isValid = Boolean(
-    formData.fullname.trim() &&
-    formData.phone.trim() &&
-    /\S+@\S+\.\S+/.test(formData.email) &&
-    formData.password.trim() &&
-    formData.agency
-  );
   
+  const validateField = useCallback((name, value) => {
+    switch (name){
+      case 'fullname':
+        return !value.trim() ? 'Full name is required.' : null;
+      case 'phone':
+        return !/^\d{10}$/.test(value.trim()) ? 'Phone must be 10 digits.' : null;
+      case 'email':
+        return !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) 
+          ? 'Please enter valid email address.' : null;
+      case 'password':
+        return value.length < 6 ? 'Password must be atleast 6 characters.' : null;
+      case 'agency':
+        return !value ? 'Field is required.' : null;
+      default: return null
+    }
+  }, []);
+
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev, [name]: value
     }))
-  }, [])
+
+    setErrors(prev => ({
+      ...prev,
+      [name]: validateField(name, value)
+    }))
+  }, [validateField])
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (isValid) {
-      const res = signup(formData);
-      if(!res.success){
-        toast.error(res.message)
-      } else {
-        navigate('/profile', { replace: true });
-      }
+    const errObj = {}
+    Object.entries(formData).forEach(([name, value]) => {
+      const errMsg = validateField(name, value);
+      if(errMsg) errObj[name] = errMsg;
+    })
+
+    if(Object.keys(errObj).length > 0){
+      setErrors(errObj)
+      return;
+    }
+
+    const res = signup(formData)
+    if(!res.success){
+      toast.error(res.message);
     } else {
-      toast.warn('Please fill in all required fields.')
+      navigate('/profile', { replace: true })
     }
   }
 
@@ -69,12 +92,12 @@ function SignUpPage() {
 
               {
                 inputData.map((data) => (
-                  <InputField key={data.name} {...data} handleChange={handleChange} value={formData[data.name]} />
+                  <InputField key={data.name} {...data} handleChange={handleChange} value={formData[data.name]} error={errors[data.name]} />
                 ))
               }
 
               <div>
-                <p className='text-[13px] text-[#1D2226] mb-2.5'>Are you an Agency?</p>
+                <p className={`${errors.agency ? 'text-[#dd4a3d]' : ''} text-[13px] text-[#1D2226] mb-2.5`}>Are you an Agency?<span className='text-[#DD4A3D]'>*</span></p>
                 <div className='flex items-center gap-[23px]'>
                   <div className='flex items-center gap-3'>
                     <input className='appearance-none rounded-full border border-[#919191]' onChange={handleChange} type="radio" id="yes" name="agency" value="yes" />

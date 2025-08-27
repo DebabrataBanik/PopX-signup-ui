@@ -1,5 +1,5 @@
 import { useState , useEffect, useCallback } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { Helmet } from "react-helmet-async";
 import InputField from "../components/InputField";
 import { inputData } from "../util/InputData";
@@ -10,6 +10,7 @@ function LoginPage() {
 
   const navigate = useNavigate();
   const [ formData, setFormData ] = useState({ email: '', password: ''})
+  const [ errors, setErrors ] = useState({})
 
   const login = useAuthStore(state => state.login)
 
@@ -21,26 +22,48 @@ function LoginPage() {
     /\S+@\S+\.\S+/.test(formData.email) &&
     formData.password.trim()
   );
+
+  const validateField = useCallback((name, value) => {
+    switch (name){
+      case 'email':
+        return !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? 'Please enter valid email address.' : null;
+      case 'password':
+        return value.length < 6 ? 'Password must be atleast 6 characters.' : null;
+      default: return null;
+    }
+  }, [])
  
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev, [name]: value
     }))
-  }, [])
+
+    setErrors(prev => ({
+      ...prev, 
+      [name]: validateField(name, value)
+    }))
+  }, [validateField])
 
   function handleSubmit(e){
     e.preventDefault();
 
-    if(isValid) {
+    const errObj = {}
+    Object.entries(formData).forEach(([name, value]) => {
+      const errMsg = validateField(name, value);
+      if(errMsg) errObj[name] = errMsg;
+    })
 
-      const res = login(formData.email, formData.password);
-      if(res.success){
-        navigate('/profile', { replace: true });
+    if(Object.keys(errObj).length > 0){
+      setErrors(errObj)
+      return;
+    }
 
-      } else{
-        toast.error('Invalid credentials.')
-      }
+    const res = login(formData.email, formData.password);
+    if(!res.success){
+      toast.error(res.message);
+    } else {
+      navigate('/profile', { replace: true })
     }
   }
 
@@ -62,7 +85,7 @@ function LoginPage() {
               inputData.map(data => {
                 if(data.name == 'email' || data.name == 'password'){
                   return (
-                    <InputField key={data.name} {...data} handleChange={handleChange} value={formData[data.name]} />
+                    <InputField key={data.name} {...data} handleChange={handleChange} value={formData[data.name]} error={errors[data.name]}/>
                   )
                 }
                 return null;
@@ -73,7 +96,12 @@ function LoginPage() {
               className={`btn -mt-[9px] font-medium ${isValid ? "bg-[#6C25FF] cursor-pointer" : "bg-[#CBCBCB] cursor-not-allowed"} text-white`}
             >
               Login
-            </button>        
+            </button>
+            <p className="text-sm">Don't have an account. 
+              <Link to='/signup'>
+                <span className="text-[#6C25FF]"> Create Now</span>
+              </Link>
+            </p>  
           </form>
 
         </div>

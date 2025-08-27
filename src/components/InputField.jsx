@@ -7,17 +7,21 @@ function InputField({
   name,
   required = true,
   placeholder,
-  value
+  value,
+  error
 }) {
   return (
     <label className='relative' htmlFor={name}>
-      <span className='absolute-label'>
+      <span className={`absolute-label ${error ? 'text-[#DD4A3D]' : ''} `}>
         {label}
         {
           required && <span className='text-[#DD4A3D]'>*</span>
         }
       </span>
-      <input onChange={handleChange} value={value} type={type} name={name} id={name} placeholder={placeholder} />
+      <input
+        className={`${error ? 'border-[#e70b897b]' : ''}`} 
+        onChange={handleChange} value={value} type={type} name={name} id={name} placeholder={placeholder} />
+        {error && <p className="text-[#dd4a3d] text-xs mt-1">{error}</p>}
     </label>
   )
 }
