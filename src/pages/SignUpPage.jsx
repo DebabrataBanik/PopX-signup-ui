@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { inputData } from "../util/InputData";
+import validateField from "../util/validateField";
 import InputField from "../components/InputField";
 import useAuthStore from "../store/authStore";
 import { toast, ToastContainer } from "react-toastify";
@@ -26,37 +27,20 @@ function SignUpPage() {
     document.title = "Create Account";
   }, []);
   
-  const validateField = useCallback((name, value) => {
-    switch (name){
-      case 'fullname':
-        return !value.trim() ? 'Full name is required.' : null;
-      case 'phone':
-        return !/^\d{10}$/.test(value.trim()) ? 'Phone must be 10 digits.' : null;
-      case 'email':
-        return !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) 
-          ? 'Please enter valid email address.' : null;
-      case 'password':
-        return value.length < 6 ? 'Password must be atleast 6 characters.' : null;
-      case 'agency':
-        return !value ? 'Field is required.' : null;
-      default: return null
-    }
-  }, []);
-
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev, [name]: value
     }))
-  }, [])
+  }
 
-  const handleBlur = useCallback(e => {
+  const handleBlur = e => {
     const { name, value } = e.target;
     setErrors(prev => ({
       ...prev,
       [name]: validateField(name, value)
     }))
-  }, [validateField])
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -89,7 +73,7 @@ function SignUpPage() {
       <div className='flex flex-col grow justify-between px-5 pt-10 pb-[30px]'>
         <div className="flex flex-col grow">
           <h1 className='font-rubik font-medium text-[#1D2226] text-[28px] leading-[36px] max-w-[188px]'>Create your PopX account</h1>
-          <form onSubmit={handleSubmit} className='flex flex-col justify-between grow'>
+          <form noValidate onSubmit={handleSubmit} className='flex flex-col justify-between grow'>
 
             <div className="flex flex-col gap-[29px] mt-[31px]">
 

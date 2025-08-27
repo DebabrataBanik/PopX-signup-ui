@@ -1,8 +1,9 @@
-import { useState , useEffect, useCallback } from "react"
+import { useState , useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { Helmet } from "react-helmet-async";
 import InputField from "../components/InputField";
 import { inputData } from "../util/InputData";
+import validateField from "../util/validateField";
 import useAuthStore from "../store/authStore";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -22,31 +23,21 @@ function LoginPage() {
     /\S+@\S+\.\S+/.test(formData.email) &&
     formData.password.trim()
   );
-
-  const validateField = useCallback((name, value) => {
-    switch (name){
-      case 'email':
-        return !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? 'Please enter valid email address.' : null;
-      case 'password':
-        return value.length < 6 ? 'Password must be atleast 6 characters.' : null;
-      default: return null;
-    }
-  }, [])
  
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev, [name]: value
     }))
-  }, [])
+  }
 
-  const handleBlur = useCallback((e) => {
+  const handleBlur = (e) => {
     const { name, value } = e.target;
     setErrors(prev => ({
       ...prev, 
       [name]: validateField(name, value)
     }))
-  }, [validateField])
+  }
 
   function handleSubmit(e){
     e.preventDefault();
@@ -82,7 +73,7 @@ function LoginPage() {
             <h1 className='font-rubik font-medium text-[#1D2226] text-[28px] leading-[36px] max-w-[188px]'>Signin to your PopX account</h1>
             <p className='font-rubik text-[#1D2226]/60 font-normal text-[18px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
           </div>
-          <form className='flex flex-col gap-[23px]' onSubmit={handleSubmit}>
+          <form noValidate className='flex flex-col gap-[23px]' onSubmit={handleSubmit}>
 
             {
               inputData.map(data => {
