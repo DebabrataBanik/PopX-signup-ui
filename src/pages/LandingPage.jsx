@@ -20,11 +20,17 @@ function LandingPage() {
             <p className='font-rubik text-[#1D2226]/60 font-normal text-[18px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
           </div>
           <div className='flex flex-col gap-2.5 items-center'>
-            <Link to='/signup'>
-              <button className='btn cursor-pointer text-white bg-[#6C25FF] font-medium'>Create Account</button>
+            <Link 
+              to='/signup'
+              className='btn cursor-pointer text-white bg-[#6C25FF] font-medium' 
+            >
+              Create Account
             </Link>
-            <Link to='/login'>
-              <button className='btn cursor-pointer text-[#1D2226] bg-[#6C25FF4B] font-medium'>Already Registered? Login</button>
+            <Link 
+              to='/login'
+              className="btn cursor-pointer text-[#1D2226] bg-[#6C25FF4B] font-medium"
+            >
+              Already Registered? Login
             </Link>
           </div>
         </div>

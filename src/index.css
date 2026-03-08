@@ -35,7 +35,7 @@ body{
   }
 
   input{
-    width: 335px;
+    width: 100%;
     height: 40px;
     border-radius: 6px;
     padding-left: 14px;
@@ -81,7 +81,7 @@ body{
 @layer utilities{
 
   .btn{
-    width: 335px;
+    width: 100%;
     height: 46px;
     border-radius: 6px;
     display: flex;
